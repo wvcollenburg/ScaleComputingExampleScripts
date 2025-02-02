@@ -30,7 +30,7 @@ urllib3.disable_warnings(category=urllib3.exceptions.InsecureRequestWarning)
 # set required variables
 username = "doademo"
 password = "doademo"
-url = "https://172.16.0.241/"
+url = "https://edge.demolabs.me/"
 
 # You should not have to change anything below this point for the script to work as designed.
 
@@ -82,8 +82,20 @@ virdomain_json = json.loads(virdomain_response.text)
 
 # now iterate over the array that has just been created and print the names of the vm's and their state
 
-for vm in virdomain_json:
-    print(vm['name'], "\t", vm['state'])
+with open("output.csv", "w") as f:
+    print("vmname, state, cpuUsage\n")
+
+    for vm in virdomain_json:
+        if vm['state'] == "RUNNING":
+            api_virdomainstats = url + prefix + 'VirDomainStats/' + vm['uuid']
+            virdomainstats_result = json.loads(requests.request("GET",
+                                                                api_virdomainstats,
+                                                                headers=api_headers,
+                                                                verify=False)
+                                                                .text)
+
+            #print(virdomainstats_result[0]['cpuUsage'])
+            print(vm['name'] + ", " + vm['state'] + ", " + str(virdomainstats_result[0]['cpuUsage']) + ", " + str(virdomainstats_result[0]['vsdStats'][0]['rates'][0]['milliwritesPerSecond']))
 
 
 
@@ -94,6 +106,3 @@ logout_response = requests.request("POST",
                                    headers=api_headers,
                                    verify=False
 )
-
-print(logout_response)
-
