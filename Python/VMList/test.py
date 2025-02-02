@@ -28,8 +28,8 @@ urllib3.disable_warnings(category=urllib3.exceptions.InsecureRequestWarning)
 # your certificate path.
 
 # set required variables
-username = "doademo"
-password = "doademo"
+username = "admin"
+password = "admin"
 url = "https://172.16.0.241/"
 
 # You should not have to change anything below this point for the script to work as designed.
