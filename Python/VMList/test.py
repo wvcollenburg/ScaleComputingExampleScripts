@@ -83,28 +83,42 @@ virdomain_json = json.loads(virdomain_response.text)
 # now iterate over the array that has just been created and print the names of the vm's and their state
 
 with open("output.csv", "w") as f:
-    f.write("vmname, state, VCPUs, cpuUsage%, RAM, Drives, IOPsWrite, IOPsRead\n")
+    f.write("vmname, state, VCPUs, RAM, Snapshots, VMType, Location, DriveType, SizeGB, Allocated%\n")
 
     for vm in virdomain_json:
-        if vm['state'] == "RUNNING":
+        if vm['state'] in("RUNNING", "SHUTOFF"):
             api_virdomainstats = url + prefix + 'VirDomainStats/' + vm['uuid']
-            virdomainstats_result = json.loads(requests.request("GET",
-                                                                api_virdomainstats,
-                                                                headers=api_headers,
-                                                                verify=False)
-                                                                .text)
-
-            #print(virdomainstats_result[0]['cpuUsage'])
+            
             f.write(vm['name']
                     + ", " + vm['state']
                     + ", " + str(vm['numVCPU'])
-                    + ", " + str(round(virdomainstats_result[0]['cpuUsage'], 3))
                     + ", " + str(vm['mem'] / 1024**3)
-                    + ", " + str(len(vm['blockDevs']))
-                    + ", " + str(round(virdomainstats_result[0]['vsdStats'][0]['rates'][0]['milliwritesPerSecond'] / 1000, 3))
-                    + ", " + str(round(virdomainstats_result[0]['vsdStats'][0]['rates'][0]['millireadsPerSecond'] / 1000, 3))
-                    + "\n"
+                    + ", " + str(len(vm['snapUUIDs']))
+                    + ", " + vm['machineType']
                     )
+            
+            if not vm['sourceVirDomainUUID'] == "":
+                f.write(", REPLICA")
+            else:
+                f.write(", LOCAL")
+
+
+            for disk in vm['blockDevs']:
+                if disk['type'] == "VIRTIO_DISK" or disk['type'] == "IDE_DISK":
+                    f.write(", " + disk['type'])
+                    f.write(", " + str(round(disk['capacity'] / 1000**3, 2)))
+                    f.write(", " + str(round(disk['allocation'] / disk['capacity'] * 100, 2)))
+            
+
+            f.write("\n")
+
+
+
+#                    + ", " + (vm['blockDevs'][0]['uuid'])
+#                    + ", " + str(round(virdomainstats_result[0]['vsdStats'][0]['rates'][0]['milliwritesPerSecond'] / 1000, 3))
+#                    + ", " + str(round(virdomainstats_result[0]['vsdStats'][0]['rates'][0]['millireadsPerSecond'] / 1000, 3))
+#                    + "\n"
+#                    )
 
 
 
