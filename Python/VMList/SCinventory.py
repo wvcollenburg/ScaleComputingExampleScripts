@@ -30,7 +30,7 @@ urllib3.disable_warnings(category=urllib3.exceptions.InsecureRequestWarning)
 # set required variables
 username = "doademo"
 password = "doademo"
-url = "https://edge.demolabs.me/"
+url = "https://172.16.0.241/"
 
 # You should not have to change anything below this point for the script to work as designed.
 
@@ -76,13 +76,13 @@ virdomain_response = requests.request("GET",
                                       verify=False
 )
 
-# fix the formatting so python json can interpret properly (should not be nescesary but yields better results)
+# dump the json output into a dict. Later on in this script i have done this in a single command.
 
 virdomain_json = json.loads(virdomain_response.text)
 
 # now iterate over the array that has just been created and print the names of the vm's and their state
 
-with open("output.csv", "w") as f:
+with open("vmOverview.csv", "w") as f:
     f.write("vmname, state, VCPUs, RAM, Snapshots, VMType, Location, DriveType, SizeGB, Allocated%\n")
 
     for vm in virdomain_json:
