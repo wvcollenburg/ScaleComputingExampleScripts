@@ -1,0 +1,15 @@
+vmname, state, VCPUs, cpuUsage%, RAM, IOPsWrite, IOPsRead
+ParW10v6-003, RUNNING, 4, 1.47, 6.0, 3, 0.0, 0.0
+leobroker01, RUNNING, 2, 6.431, 8.0, 2, 0.0, 0.0
+parabroker01, RUNNING, 8, 1.785, 8.0, 4, 2.778, 0.0
+DC02, RUNNING, 4, 2.567, 8.0, 4, 2.273, 0.0
+HAProxy02, RUNNING, 2, 1.047, 2.0, 2, 0.0, 0.0
+ScaleCloudGateway, RUNNING, 1, 0.897, 0.5, 2, 0.0, 0.0
+RDS01, RUNNING, 4, 2.021, 6.0, 3, 0.469, 0.0
+pihole, RUNNING, 2, 0.15, 2.0, 2, 0.465, 0.0
+uponscale01, RUNNING, 2, 0.299, 4.0, 2, 1.101, 0.0
+zabbix01, RUNNING, 4, 1.496, 8.0, 2, 54.979, 0.0
+AcronisCloudAppliance, RUNNING, 2, 3.693, 8.0, 2, 0.074, 0.0
+leogateway01, RUNNING, 2, 4.336, 8.0, 2, 1.275, 0.0
+ParW10v6-002, RUNNING, 4, 1.672, 6.0, 3, 0.0, 0.0
+DC03, RUNNING, 4, 1.346, 8.0, 5, 2.534, 0.0

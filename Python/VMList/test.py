@@ -83,7 +83,7 @@ virdomain_json = json.loads(virdomain_response.text)
 # now iterate over the array that has just been created and print the names of the vm's and their state
 
 with open("output.csv", "w") as f:
-    print("vmname, state, cpuUsage\n")
+    f.write("vmname, state, VCPUs, cpuUsage%, RAM, Drives, IOPsWrite, IOPsRead\n")
 
     for vm in virdomain_json:
         if vm['state'] == "RUNNING":
@@ -95,7 +95,16 @@ with open("output.csv", "w") as f:
                                                                 .text)
 
             #print(virdomainstats_result[0]['cpuUsage'])
-            print(vm['name'] + ", " + vm['state'] + ", " + str(virdomainstats_result[0]['cpuUsage']) + ", " + str(virdomainstats_result[0]['vsdStats'][0]['rates'][0]['milliwritesPerSecond']))
+            f.write(vm['name']
+                    + ", " + vm['state']
+                    + ", " + str(vm['numVCPU'])
+                    + ", " + str(round(virdomainstats_result[0]['cpuUsage'], 3))
+                    + ", " + str(vm['mem'] / 1024**3)
+                    + ", " + str(len(vm['blockDevs']))
+                    + ", " + str(round(virdomainstats_result[0]['vsdStats'][0]['rates'][0]['milliwritesPerSecond'] / 1000, 3))
+                    + ", " + str(round(virdomainstats_result[0]['vsdStats'][0]['rates'][0]['millireadsPerSecond'] / 1000, 3))
+                    + "\n"
+                    )
 
 
 
