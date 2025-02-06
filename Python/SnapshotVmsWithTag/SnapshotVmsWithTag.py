@@ -30,9 +30,9 @@ urllib3.disable_warnings(category=urllib3.exceptions.InsecureRequestWarning)
 # your certificate path.
 
 # set required variables
-username = "username"                # Scale Computing Hypercore Username
-password = "password"                # Scale Computing Hypercore Password
-url = "https://192.168.0.101/"       # Scale Computing Hypercore Node URL or IP address
+username = "admin"                   # Scale Computing Hypercore Username with at minimal Backup permissions
+password = "admin"                   # Scale Computing Hypercore Password
+url = "https://192.168.0.1/"         # Scale Computing Hypercore Node URL or IP address
 task_timeout = 300                   # time in secconds, How long can tasks run before assuming they failed. Exports take long, shutdowns relatively short.
 search_tag = "SnapMeScript"          # All vm's with this tag will be snapped when running this script
 
@@ -140,8 +140,8 @@ for vm in virdomain_response:
                                                         ).text)
         print(snapshot_response)
         
-        # we actually do not have to wait for a snapshot to finish to queue the next one
-        # To demonstrate what the function does we do wait for one snapshot to finish before
+        # we actually do not have to wait for a snapshot to finish to queue the next one but
+        # to demonstrate what the function does we do wait for one snapshot to finish before
         # starting the next.
 
         Scale_WaitForTask(snapshot_response["taskTag"])
