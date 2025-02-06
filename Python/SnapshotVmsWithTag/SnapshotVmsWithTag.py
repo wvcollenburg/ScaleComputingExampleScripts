@@ -30,9 +30,9 @@ urllib3.disable_warnings(category=urllib3.exceptions.InsecureRequestWarning)
 # your certificate path.
 
 # set required variables
-username = "doademo"                # Scale Computing Hypercore Username
-password = "doademo"                # Scale Computing Hypercore Password
-url = "https://edge.demolabs.me/"       # Scale Computing Hypercore Node URL or IP address
+username = "admin"                   # Scale Computing Hypercore Username with at minimal Backup permissions
+password = "admin"                   # Scale Computing Hypercore Password
+url = "https://192.168.0.1/"         # Scale Computing Hypercore Node URL or IP address
 task_timeout = 300                   # time in secconds, How long can tasks run before assuming they failed. Exports take long, shutdowns relatively short.
 search_tag = "SnapMeScript"          # All vm's with this tag will be snapped when running this script
 
