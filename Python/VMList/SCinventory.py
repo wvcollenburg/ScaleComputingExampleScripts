@@ -30,9 +30,9 @@ urllib3.disable_warnings(category=urllib3.exceptions.InsecureRequestWarning)
 # your certificate path.
 
 # set required variables
-username = "admin"              # scale computing cluster user with at minimal READ permissions
-password = "admin"              # scale computing cluster password
-url = "https://192.168.0.11/"   # URL to cluster
+username = "doademo"              # Scale Computing Hypercore Username with at minimal READ permissions
+password = "doademo"              # Scale Computing Hypercore Password
+url = "https://172.16.0.241/"   # URL to cluster
 measure_in_hours = 6
 
 # \|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||/ #
@@ -94,7 +94,7 @@ with open("vmOverview.csv","w") as f:
                     + "," + str(len(vm['snapUUIDs']))
                     + "," + vm['machineType']
                     )
-            
+            # Fake some disk data because otherwise it will break the grafana interpetation.
             if not vm['sourceVirDomainUUID'] == "":
                 f.write(",REPLICA,NO_DISK,0,0,NO_DISK,0,0")
             else:
@@ -107,7 +107,7 @@ with open("vmOverview.csv","w") as f:
                     f.write("," + str(round(disk['capacity'] / 1000**3, 2)))
                     f.write("," + str(round(disk['allocation'] / disk['capacity'] * 100, 2)))
                     disk_count -= 1
-            if disk_count == 7:
+            if disk_count == 7: # if there is only 1 disk, fake a seccond because otherwise it will break grafana
                 f.write(",NO_DISK,0,0")
             f.write("\n")
 
