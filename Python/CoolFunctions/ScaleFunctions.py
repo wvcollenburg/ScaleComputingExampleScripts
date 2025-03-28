@@ -423,7 +423,8 @@ def sc_change_tag(type: str, identifier: str, method: str, tags: list, api_heade
     match method:
         case "add":
             vm_tags_list.append(tags)
-
+            vm_tags_str = ','.join(vm_tags_list)
+        
         case "remove":
             if tags in vm_tags_list:
                 vm_tags_list.remove(tags)
